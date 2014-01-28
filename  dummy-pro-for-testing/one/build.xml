@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="DummyPro" basedir=".">
+	<property name="warfile" value="one" />
+	<property name="destDir" value="C:\tomcat\tomcat\webapps" />
+	<target name="unpack">
+		<unwar src="${destDir}\${warfile}.war" dest="${destDir}\${warfile}" />
+	</target>
+	<target name="create">
+		<war destfile="${warfile}.war" webxml="WebContent/WEB-INF/web.xml" update="true">
+			<classes dir="build\classes" />
+			<fileset dir="WebContent">
+				<exclude name="WEB-INF/web.xml" />
+			</fileset>
+		</war>
+	</target>
+	<target name="copy">
+		<copy todir="${destDir}" overwrite="true">
+			<fileset dir=".">
+				<include name="*.war" />
+			</fileset>
+		</copy>
+	</target>
+	<target name="delete">
+		<delete file="${destDir}\${warfile}.war" />
+		<delete>
+			<fileset dir="${destDir}\${warfile}" includes="**/*" />
+		</delete>
+	</target>
+	<target name="deleteWar">
+		<delete file="${warfile}.war" />
+	</target>
+	<target name="deploy">
+		<!--<antcall target="delete" />-->
+		<antcall target="create" />
+		<antcall target="copy" />
+		<antcall target="unpack" />
+		<antcall target="deleteWar" />
+	</target>
+</project>
