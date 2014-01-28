@@ -30,7 +30,7 @@
 		<delete file="${warfile}.war" />
 	</target>
 	<target name="deploy">
-		<!--<antcall target="delete" />-->
+		<antcall target="delete" />
 		<antcall target="create" />
 		<antcall target="copy" />
 		<antcall target="unpack" />
